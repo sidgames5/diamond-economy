@@ -1,3 +1,5 @@
+The currency mod used on Arch SMP Season 5
+
 Basic economy for the fabric modloader using diamonds as currency. Uses the "/diamonds" command along with the following subcommands
 
 - balance [Optional: player] - tells user how much money the player has

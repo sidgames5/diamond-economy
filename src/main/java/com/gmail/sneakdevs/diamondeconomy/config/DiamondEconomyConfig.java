@@ -19,7 +19,7 @@ public class DiamondEconomyConfig implements ConfigData {
     public String[] currencies = {"minecraft:diamond","minecraft:diamond_block"};
 
     @Comment("Values of each currency in the same order, decimals not allowed (must be in ascending order unless greedyWithdraw is disabled)")
-    public int[] currencyValues = {1,9};
+    public int[] currencyValues = {100,900};
 
     @Comment("Where the diamondeconomy.sqlite file is located (ex: \"C:/Users/example/Desktop/server/world/diamondeconomy.sqlite\")")
     public String fileLocation = null;
@@ -31,12 +31,12 @@ public class DiamondEconomyConfig implements ConfigData {
     public String topCommandName = "top";
     public String balanceCommandName = "balance";
     public String depositCommandName = "deposit";
-    public String sendCommandName = "send";
+    public String sendCommandName = "transfer";
     public String withdrawCommandName = "withdraw";
 
     @Comment("Names of the admin subcommands (null to disable command)")
-    public String setCommandName = "set";
-    public String modifyCommandName = "modify";
+    public String setCommandName = "";
+    public String modifyCommandName = "";
 
     @Comment("Try to withdraw items using the most high value items possible (ex. diamond blocks then diamonds) \n If disabled withdraw will give player the first item in the list")
     public boolean greedyWithdraw = true;

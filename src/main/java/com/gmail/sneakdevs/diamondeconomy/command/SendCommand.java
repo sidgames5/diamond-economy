@@ -2,6 +2,7 @@ package com.gmail.sneakdevs.diamondeconomy.command;
 
 import com.gmail.sneakdevs.diamondeconomy.DiamondUtils;
 import com.gmail.sneakdevs.diamondeconomy.config.DiamondEconomyConfig;
+import com.gmail.sneakdevs.diamondeconomy.discord.MessageManager;
 import com.gmail.sneakdevs.diamondeconomy.sql.DatabaseManager;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -33,6 +34,7 @@ public class SendCommand {
         if (newValue < Integer.MAX_VALUE && dm.changeBalance(player1.getStringUUID(), -amount)) {
             dm.changeBalance(player.getStringUUID(), amount);
             player.displayClientMessage(Component.literal("You received $" + amount + " from " + player1.getName().getString()), false);
+            MessageManager.logTransaction(player1.getName().getString(), player.getName().getString(), amount);
             ctx.getSource().sendSuccess(() -> Component.literal("Sent $" + amount + " to " + player.getName().getString()), false);
         } else {
             ctx.getSource().sendSuccess(() -> Component.literal("Failed because that would go over the max value"), false);

@@ -14,11 +14,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.storage.LevelResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class DiamondEconomy implements ModInitializer {
+    private static final Logger logger = LoggerFactory.getLogger(DiamondEconomy.class);
     public static final String MODID = "diamondeconomy";
     public static ArrayList<String> tableRegistry = new ArrayList<>();
 
@@ -74,9 +77,13 @@ public class DiamondEconomy implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        logger.info("Starting Diamond Economy");
+
         AutoConfig.register(DiamondEconomyConfig.class, JanksonConfigSerializer::new);
         registerPlaceholders();
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> DiamondEconomyCommands.register(dispatcher));
         ServerLifecycleEvents.SERVER_STARTING.register(DiamondEconomy::initServer);
+
+        logger.info("Started Diamond Economy");
     }
 }
