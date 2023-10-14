@@ -11,6 +11,7 @@ public interface DatabaseManager {
     String getNameFromUUID(String uuid);
 
     int getBalanceFromUUID(String uuid);
+    String getUUIDFromName(String name);
     int getBalanceFromName(String name);
     boolean setBalance(String uuid, int money);
     void setAllBalance(int money);
