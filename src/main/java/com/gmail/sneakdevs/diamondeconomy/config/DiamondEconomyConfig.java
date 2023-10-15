@@ -53,6 +53,9 @@ public class DiamondEconomyConfig implements ConfigData {
     @Comment("Permission level (1-4) of the op commands in diamond economy. Set to 2 to allow command blocks to use these commands.")
     public int opCommandsPermissionLevel = 4;
 
+    @Comment("Discord webhook URL to log transactions")
+    public String webhookURL = "";
+
     public static Item getCurrency(int num) {
         return BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(DiamondEconomyConfig.getInstance().currencies[num]));
     }

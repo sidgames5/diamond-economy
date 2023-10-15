@@ -81,6 +81,9 @@ public class SQLiteDatabaseManager implements DatabaseManager {
     }
 
     public int getBalanceFromUUID(String uuid){
+        if (!uuid.matches("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")) {
+            return -1;
+        }
         String sql = "SELECT uuid, money FROM diamonds WHERE uuid = '" + uuid + "'";
 
         try (Connection conn = this.connect(); Statement stmt  = conn.createStatement(); ResultSet rs    = stmt.executeQuery(sql)){
@@ -93,6 +96,9 @@ public class SQLiteDatabaseManager implements DatabaseManager {
     }
 
     public String getNameFromUUID(String uuid){
+        if (!uuid.matches("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")) {
+            return null;
+        }
         String sql = "SELECT uuid, name FROM diamonds WHERE uuid = '" + uuid + "'";
 
         try (Connection conn = this.connect(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)){
@@ -104,9 +110,26 @@ public class SQLiteDatabaseManager implements DatabaseManager {
         return null;
     }
 
-    public int getBalanceFromName(String name){
-        String sql = "SELECT name, money FROM diamonds WHERE name = '" + name + "'";
+    public String getUUIDFromName(String name){
+        if (!name.matches("^[a-zA-Z0-9_]{1,16}$")) {
+            return null;
+        }
+        String sql = "SELECT uuid FROM diamonds WHERE name = '" + name + "' COLLATE NOCASE";
 
+        try (Connection conn = this.connect(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)){
+            rs.next();
+            return rs.getString("uuid");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int getBalanceFromName(String name){
+        if (!name.matches("^[a-zA-Z0-9_]{1,16}$")) {
+            return -1;
+        }
+        String sql = "SELECT name, money FROM diamonds WHERE name = '" + name + "'";
         try (Connection conn = this.connect(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)){
             rs.next();
             return rs.getInt("money");

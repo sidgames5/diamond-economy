@@ -1,5 +1,6 @@
 package com.gmail.sneakdevs.diamondeconomy.discord;
 
+import com.gmail.sneakdevs.diamondeconomy.config.DiamondEconomyConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +10,11 @@ public class MessageManager {
     private static final Logger logger = LoggerFactory.getLogger(MessageManager.class);
 
     public static void logTransaction(String sender, String recipient, int amount) {
-        var webhook = new Webhook("https://discord.com/api/webhooks/1131960494257872936/YQWosOo2L5764ne5efROPYHYAN-ky93T4xtRQXoJ9xjanukQCOXQiStjAC1Ha51efiY4");
+        String url = DiamondEconomyConfig.getInstance().webhookURL;
+        if (url == null || url.isEmpty()) {
+            return;
+        }
+        var webhook = new Webhook(url);
         webhook.setContent("$" + amount + " " + sender + " -> " + recipient);
         try {
             webhook.execute();
